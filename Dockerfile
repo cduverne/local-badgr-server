@@ -49,12 +49,15 @@ RUN touch /home/badgr/.bashrc \
 RUN sudo apt-get install ruby2.0 -y
 RUN sudo ln -sf /usr/bin/ruby2.0 /usr/bin/ruby
 RUN sudo ln -sf /usr/bin/gem2.0 /usr/bin/gem
+RUN sudo apt-get install ruby2.0-dev -y
 RUN sudo gem install sass --no-rdoc --no-ri
 
 # Installing Badgr
 RUN source $NVM_DIR/nvm.sh && nvm use default && npm install -g grunt-cli
 # Not running virtualenv because this server will only run Badgr requirements.
 # If it is needed, add to the next RUN (before pip) ' && virtualenv env && source env/bin/activate \'
+RUN sudo pip install --upgrade setuptools
+RUN sudo apt-get install libffi-dev libssl-dev
 RUN git clone https://github.com/concentricsky/badgr-server.git \
     && cd badgr-server \
     && sudo pip install -r requirements-dev.txt \
